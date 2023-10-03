@@ -16,6 +16,7 @@
 
 <resources>
     <string name="app_name">Trivia App</string>
+    <string name="Let_s_play">Let\'s play </string>
     <string name="game_over">Game Over</string>
     <string name="try_again">Try Again?</string>
     <string name="position">Position</string>
