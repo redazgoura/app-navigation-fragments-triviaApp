@@ -19,21 +19,37 @@ package com.example.android.navigation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var drawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         @Suppress("UNUSED_VARIABLE")
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+
+        // initialize drawerlayout from binding
+        drawerLayout = binding.idDrawerLayout
+
         val navController = this.findNavController(R.id.idNavHostFrgmnt)
-        NavigationUI.setupActionBarWithNavController(this, navController)
+
+        //when we set up navcontroller with the action bar we need drawerLayout as third party
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+
+        //set up the navigationUI to know abt the nav view
+        NavigationUI.setupWithNavController(binding.idNavigationView, navController)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.idNavHostFrgmnt)
-        return navController.navigateUp()
+
+        // using nav up with drawerLayout
+        return NavigationUI.navigateUp(navController, drawerLayout)//NavigationUI can replace the UpButton
     }
 }
